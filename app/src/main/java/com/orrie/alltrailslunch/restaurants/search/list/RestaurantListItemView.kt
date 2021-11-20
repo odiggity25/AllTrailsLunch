@@ -1,0 +1,96 @@
+package com.orrie.alltrailslunch.restaurants.search.list
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.orrie.alltrailslunch.R
+import com.orrie.alltrailslunch.databinding.RestaurantListItemViewBinding
+import com.orrie.alltrailslunch.restaurants.models.Restaurant
+import com.orrie.alltrailslunch.shared.resourceString
+import com.orrie.alltrailslunch.shared.views.pxToDp
+import com.orrie.alltrailslunch.shared.views.setVisibility
+import com.orrie.alltrailslunch.shared.views.subscribeToViewModelObservable
+import com.orrie.alltrailslunch.shared.views.throttleTaps
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+/**
+ * This is a restaurant search result card in the recyclerview and contains info
+ * including name, image, price and rating
+ */
+class RestaurantListItemView(context: Context) : FrameLayout(context), KoinComponent {
+
+    private val viewModel: RestaurantListItemViewModel by inject()
+    // Note to reviewer: Ide probably says this can be joined with assignment however I prefer
+    // to keep them separate to keep things consistent with activities and fragments
+    private val binding: RestaurantListItemViewBinding
+
+    init {
+        binding = RestaurantListItemViewBinding.inflate(LayoutInflater.from(context), this, true)
+        initUi()
+        subscribeToViewModelObservables()
+    }
+
+    private fun initUi() {
+        binding.heartButton.throttleTaps { viewModel.heartTapped() }
+    }
+
+    private fun subscribeToViewModelObservables() {
+        viewModel.heartChanged.subscribeToViewModelObservable {
+            binding.heartButton.setImageResource(if (it) R.drawable.ic_heart_filled else R.drawable.ic_heart_unfilled)
+        }
+    }
+
+    fun bind(restaurant: Restaurant) {
+        viewModel.bind(restaurant)
+        updateImage(restaurant)
+        binding.restaurantName.text = restaurant.name
+        updateRatingSection(restaurant)
+        updateCostSection(restaurant)
+    }
+
+    private fun updateImage(restaurant: Restaurant) {
+        restaurant.imageUrl?.let {
+            Glide.with(context).load(it).into(binding.restaurantImage)
+        } ?: run {
+            // Make sure to clear image so if view is re-used with a restaurant that doesn't have an
+            // image, the old restaurant image isn't displayed
+            binding.restaurantImage.setImageDrawable(null)
+        }
+    }
+
+    private fun updateCostSection(restaurant: Restaurant) {
+        var dollarSigns = ""
+        repeat(restaurant.dollarSigns ?: 0) { dollarSigns += "$" }
+        val costMoreInfoString = R.string.costAndMoreInfo.resourceString(dollarSigns, restaurant.supportingText ?: "")
+        binding.costAndMoreInfo.text = costMoreInfoString
+    }
+
+    private fun updateRatingSection(restaurant: Restaurant) {
+        restaurant.stars?.let { stars ->
+            binding.ratingContainer.apply {
+                repeat(stars) { addView(makeStarView(true)) }
+                repeat(5 - stars) { addView(makeStarView(false)) }
+                addView(TextView(context).apply {
+                    layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+                    text = R.string.num_reviews.resourceString(restaurant.numReviews ?: 0)
+                })
+            }
+        } ?: run {
+            binding.ratingContainer.removeAllViews()
+        }
+        binding.ratingContainer.setVisibility(restaurant.stars != null)
+    }
+
+    private fun makeStarView(filled: Boolean): ImageView {
+        return ImageView(context).apply {
+            val dimension = 16.pxToDp()
+            setBackgroundResource(R.drawable.ic_star_filled)
+            if (!filled) setBackgroundResource(R.color.light_grey)
+            layoutParams = LayoutParams(dimension, dimension)
+        }
+    }
+}
