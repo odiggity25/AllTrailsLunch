@@ -54,10 +54,10 @@
 
             <fragment
                 android:id="@+id/list_fragment"
-                android:name="com.orrie.alltrailslunch.views.RestaurantsListFragment"
+                android:name="com.orrie.alltrailslunch.restaurants.search.list.RestaurantsListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".restaurants.search.MainActivity" />
+                tools:context=".restaurants.search.RestaurantsSearchActivity" />
         </FrameLayout>
 
         <FrameLayout
@@ -67,10 +67,10 @@
 
             <fragment
                 android:id="@+id/map_fragment"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:name="com.orrie.alltrailslunch.restaurants.search.map.RestaurantsMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".restaurants.search.MainActivity" />
+                tools:context=".restaurants.search.RestaurantsSearchActivity" />
         </FrameLayout>
 
         <TextView

@@ -1,4 +1,4 @@
-package com.orrie.alltrailslunch.shared.viewModels
+package com.orrie.alltrailslunch.shared
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable

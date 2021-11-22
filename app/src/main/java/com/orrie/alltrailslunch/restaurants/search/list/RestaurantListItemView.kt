@@ -9,8 +9,9 @@ import com.bumptech.glide.Glide
 import com.orrie.alltrailslunch.R
 import com.orrie.alltrailslunch.databinding.RestaurantListItemViewBinding
 import com.orrie.alltrailslunch.restaurants.models.Restaurant
+import com.orrie.alltrailslunch.shared.resourceColor
 import com.orrie.alltrailslunch.shared.resourceString
-import com.orrie.alltrailslunch.shared.views.pxToDp
+import com.orrie.alltrailslunch.shared.views.dpToPx
 import com.orrie.alltrailslunch.shared.views.setVisibility
 import com.orrie.alltrailslunch.shared.views.subscribeToViewModelObservable
 import com.orrie.alltrailslunch.shared.views.throttleTaps
@@ -30,6 +31,7 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
 
     init {
         binding = RestaurantListItemViewBinding.inflate(LayoutInflater.from(context), this, true)
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         initUi()
         subscribeToViewModelObservables()
     }
@@ -69,6 +71,7 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
         binding.costAndMoreInfo.text = costMoreInfoString
     }
 
+    @Suppress("DEPRECATION")
     private fun updateRatingSection(restaurant: Restaurant) {
         restaurant.stars?.let { stars ->
             binding.ratingContainer.apply {
@@ -76,6 +79,7 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
                 repeat(5 - stars) { addView(makeStarView(false)) }
                 addView(TextView(context).apply {
                     layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+                    setTextAppearance(context, R.style.subheading1)
                     text = R.string.num_reviews.resourceString(restaurant.numReviews ?: 0)
                 })
             }
@@ -87,9 +91,9 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
 
     private fun makeStarView(filled: Boolean): ImageView {
         return ImageView(context).apply {
-            val dimension = 16.pxToDp()
+            val dimension = 24.dpToPx()
             setBackgroundResource(R.drawable.ic_star_filled)
-            if (!filled) setBackgroundResource(R.color.light_grey)
+            if (!filled) background.setTint(R.color.grey_dark.resourceColor())
             layoutParams = LayoutParams(dimension, dimension)
         }
     }

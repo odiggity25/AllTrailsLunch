@@ -32,7 +32,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".restaurants.search.MainActivity"
+            android:name=".restaurants.search.RestaurantsSearchActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
             <intent-filter>

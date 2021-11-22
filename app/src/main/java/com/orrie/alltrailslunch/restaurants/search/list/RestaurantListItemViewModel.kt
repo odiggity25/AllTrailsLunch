@@ -2,7 +2,7 @@ package com.orrie.alltrailslunch.restaurants.search.list
 
 import com.orrie.alltrailslunch.restaurants.RestaurantsRepository
 import com.orrie.alltrailslunch.restaurants.models.Restaurant
-import com.orrie.alltrailslunch.shared.viewModels.BaseViewModel
+import com.orrie.alltrailslunch.shared.BaseViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.koin.core.component.inject

@@ -6,6 +6,7 @@ import com.orrie.alltrailslunch.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
+import timber.log.Timber
 
 /**
  * --PROJECT STRUCTURE
@@ -66,5 +67,7 @@ class ATApplication : Application() {
             androidContext(this@ATApplication)
             modules(appModule)
         }
+
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 }

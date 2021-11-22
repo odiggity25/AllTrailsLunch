@@ -1,30 +1,32 @@
 package com.orrie.alltrailslunch.restaurants.search.list
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.orrie.alltrailslunch.R
-import com.orrie.alltrailslunch.databinding.RestaurantListItemViewBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.orrie.alltrailslunch.databinding.RestaurantsListFragmentBinding
-import com.orrie.alltrailslunch.shared.viewModels.BaseViewModel
+import com.orrie.alltrailslunch.restaurants.models.Restaurant
 import com.orrie.alltrailslunch.shared.views.BaseFragment
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RestaurantsListFragment : BaseFragment<RestaurantsListFragmentBinding>(
     RestaurantsListFragmentBinding::inflate
 ) {
     // Properties
-    override val viewModel: RestaurantsListViewModel by inject()
+    override val viewModel: RestaurantsListViewModel by viewModel()
+    private val adapter: RestaurantsListAdapter by inject()
 
     // Functions
     override fun initUi() {
-        TODO("Not yet implemented")
+        binding.restaurantsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@RestaurantsListFragment.adapter
+        }
     }
 
     override fun subscribeToViewModelObservables() {
-        TODO("Not yet implemented")
+        // No-op in this case. Normally this is not the case for fragments in real apps
     }
 
+    fun updateResults(restaurants: List<Restaurant>) {
+        adapter.restaurants = restaurants
+    }
 }

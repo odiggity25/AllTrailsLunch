@@ -3,18 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:orientation="horizontal">
+    android:padding="16dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/rounded_white_background_with_border">
 
     <ImageView
         android:id="@+id/restaurant_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:background="@color/light_grey"/>
+        android:background="@color/grey_light"
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_weight="1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:orientation="vertical">
@@ -31,27 +37,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/cost_and_more_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="$$$ \u2022 Supporting text"
-            android:layout_marginTop="4dp"/>
+            style="@style/subheading1"
+            android:layout_marginTop="2dp"/>
 
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/heart_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:src="@drawable/ic_heart_unfilled"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
-        android:layout_marginTop="-8dp"
+        android:layout_marginTop="-4dp"
         />
 
 </LinearLayout>
