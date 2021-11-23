@@ -5,7 +5,6 @@ import com.orrie.alltrailslunch.restaurants.models.Restaurant
 import com.orrie.alltrailslunch.shared.BaseViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
 import org.koin.core.component.inject
 import timber.log.Timber
 
@@ -18,7 +17,7 @@ class RestaurantsSearchViewModel : BaseViewModel() {
     // Observables
     // Note to reviewer: I have used LiveData extensively and really dislike it.
     // Happy to discuss more in a code review
-    val searchViewTypeChanged: Observable<ViewType> = PublishSubject.create()
+    val searchViewTypeChanged: Observable<ViewType> = BehaviorSubject.create()
     val searchResultsChanged: Observable<List<Restaurant>> = BehaviorSubject.create()
 
     // Properties
@@ -31,6 +30,7 @@ class RestaurantsSearchViewModel : BaseViewModel() {
 
     // Functions
     init {
+        viewType = ViewType.Map
         restaurantsRepository.searchNearby()
             .subscribe({
                 searchResultsChanged.onNext(it)

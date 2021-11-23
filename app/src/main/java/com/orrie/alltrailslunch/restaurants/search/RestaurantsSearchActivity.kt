@@ -5,6 +5,7 @@ import com.orrie.alltrailslunch.R
 import com.orrie.alltrailslunch.databinding.RestaurantsSearchActivityBinding
 import com.orrie.alltrailslunch.restaurants.search.list.RestaurantsListFragment
 import com.orrie.alltrailslunch.restaurants.search.map.RestaurantsMapFragment
+import com.orrie.alltrailslunch.shared.resourceDrawable
 import com.orrie.alltrailslunch.shared.resourceString
 import com.orrie.alltrailslunch.shared.views.BaseActivity
 import com.orrie.alltrailslunch.shared.views.subscribeToViewModelObservable
@@ -28,6 +29,7 @@ class RestaurantsSearchActivity : BaseActivity<RestaurantsSearchActivityBinding>
         listFragment = supportFragmentManager.findFragmentById(R.id.list_fragment) as RestaurantsListFragment
 
         binding.listMapToggle.throttleTaps { viewModel.listMapToggleTapped() }
+
     }
 
     override fun subscribeToViewModelObservables() {
@@ -43,14 +45,21 @@ class RestaurantsSearchActivity : BaseActivity<RestaurantsSearchActivityBinding>
     private fun updateVisibleFragment(viewType: RestaurantsSearchViewModel.ViewType) {
         when (viewType) {
             RestaurantsSearchViewModel.ViewType.List -> {
-                binding.listMapToggle.text = R.string.map.resourceString()
-                binding.listFragmentContainer.visibility = View.VISIBLE
-                binding.mapFragmentContainer.visibility = View.GONE
+                binding.apply {
+                    listMapToggle.text = R.string.map.resourceString()
+                    listMapToggle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_map_pin.resourceDrawable(), null, null, null)
+                    listFragmentContainer.visibility = View.VISIBLE
+                    mapFragmentContainer.visibility = View.GONE
+                }
+
             }
             RestaurantsSearchViewModel.ViewType.Map -> {
-                binding.listMapToggle.text = R.string.list.resourceString()
-                binding.listFragmentContainer.visibility = View.GONE
-                binding.mapFragmentContainer.visibility = View.VISIBLE
+                binding.apply {
+                    listMapToggle.text = R.string.list.resourceString()
+                    listMapToggle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_list.resourceDrawable(), null, null, null)
+                    listFragmentContainer.visibility = View.GONE
+                    mapFragmentContainer.visibility = View.VISIBLE
+                }
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.orrie.alltrailslunch.shared.views
 
-import android.content.Context
 import android.view.View
 import com.jakewharton.rxbinding4.view.clicks
 import com.orrie.alltrailslunch.ATApplication
@@ -14,7 +13,7 @@ import kotlin.math.roundToInt
  * are only registered as one tap.
  */
 fun View.throttleTaps(action: () -> Unit) {
-    clicks().throttleFirst(1, TimeUnit.SECONDS).subscribe { action() }
+    clicks().throttleFirst(300, TimeUnit.MILLISECONDS).subscribe { action() }
 }
 
 /**

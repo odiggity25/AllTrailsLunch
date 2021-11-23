@@ -9,16 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:paddingBottom="16dp"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:elevation="4dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:text="AllTrails at Lunch" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/all_trails_lunch_logo"
+            android:layout_marginBottom="8dp"/>
 
         <!-- Note to reviewer: I used to use constraint layouts a lot more but
         actually have grown to dislike them. Happy to discuss this in the review -->
@@ -29,16 +31,28 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_marginStart="16dp"
-                android:text="Filter" />
+                android:background="@drawable/rounded_white_background_with_border"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center"
+                style="@style/subheading1"
+                android:text="@string/filter" />
 
-            <androidx.appcompat.widget.SearchView
+            <EditText
+                android:id="@+id/search_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                map:queryHint="Search for a restaurant" />
+                android:paddingStart="16dp"
+                android:paddingEnd="4dp"
+                android:background="@drawable/rounded_white_background_with_border"
+                style="@style/subheading1"
+                android:drawableEnd="@drawable/ic_search"
+                android:drawableTint="@color/green"
+                android:hint="@string/search_for_a_restaurant" />
         </LinearLayout>
     </LinearLayout>
 
@@ -76,11 +90,18 @@
         <TextView
             android:id="@+id/list_map_toggle"
             android:layout_width="wrap_content"
+            android:height="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:background="@color/white"
-            android:padding="8dp"
-            android:text="List" />
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/rounded_green_background"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            style="@style/title1"
+            android:textColor="@color/white"
+            tools:text="@string/list"
+            android:drawablePadding="4dp"
+            tools:drawableStart="@drawable/ic_list"/>
     </FrameLayout>
 </LinearLayout>
