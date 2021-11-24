@@ -26,7 +26,7 @@ class RestaurantsListFragment : BaseFragment<RestaurantsListFragmentBinding>(
         // No-op in this case. Normally this is not the case for fragments in real apps
     }
 
-    fun updateResults(restaurants: List<Restaurant>) {
+    fun restaurantsUpdated(restaurants: List<Restaurant>) {
         adapter.restaurants = restaurants
     }
 }

@@ -12,17 +12,20 @@ import com.orrie.alltrailslunch.restaurants.models.Restaurant
 import com.orrie.alltrailslunch.shared.resourceColor
 import com.orrie.alltrailslunch.shared.resourceString
 import com.orrie.alltrailslunch.shared.views.dpToPx
+import com.orrie.alltrailslunch.shared.views.pxToDp
 import com.orrie.alltrailslunch.shared.views.setVisibility
 import com.orrie.alltrailslunch.shared.views.subscribeToViewModelObservable
 import com.orrie.alltrailslunch.shared.views.throttleTaps
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.roundToInt
 
 /**
  * This is a restaurant search result card in the recyclerview and contains info
  * including name, image, price and rating
  */
-class RestaurantListItemView(context: Context) : FrameLayout(context), KoinComponent {
+class RestaurantListItemView(context: Context, val forMapInfoWindow: Boolean = false)
+    : FrameLayout(context), KoinComponent {
 
     private val viewModel: RestaurantListItemViewModel by inject()
     // Note to reviewer: Ide probably says this can be joined with assignment however I prefer
@@ -31,7 +34,11 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
 
     init {
         binding = RestaurantListItemViewBinding.inflate(LayoutInflater.from(context), this, true)
-        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        layoutParams = if (forMapInfoWindow) {
+            LayoutParams(300.pxToDp(), 100.pxToDp())
+        } else {
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        }
         initUi()
         subscribeToViewModelObservables()
     }
@@ -52,10 +59,11 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
         binding.restaurantName.text = restaurant.name
         updateRatingSection(restaurant)
         updateCostSection(restaurant)
+        binding.heartButton.setVisibility(!forMapInfoWindow)
     }
 
     private fun updateImage(restaurant: Restaurant) {
-        restaurant.imageUrl?.let {
+        restaurant.photoUrl?.let {
             Glide.with(context).load(it).into(binding.restaurantImage)
         } ?: run {
             // Make sure to clear image so if view is re-used with a restaurant that doesn't have an
@@ -66,27 +74,30 @@ class RestaurantListItemView(context: Context) : FrameLayout(context), KoinCompo
 
     private fun updateCostSection(restaurant: Restaurant) {
         var dollarSigns = ""
-        repeat(restaurant.dollarSigns ?: 0) { dollarSigns += "$" }
+        repeat(restaurant.priceLevel ?: 0) { dollarSigns += "$" }
         val costMoreInfoString = R.string.costAndMoreInfo.resourceString(dollarSigns, restaurant.supportingText ?: "")
         binding.costAndMoreInfo.text = costMoreInfoString
     }
 
     @Suppress("DEPRECATION")
     private fun updateRatingSection(restaurant: Restaurant) {
-        restaurant.stars?.let { stars ->
-            binding.ratingContainer.apply {
-                repeat(stars) { addView(makeStarView(true)) }
-                repeat(5 - stars) { addView(makeStarView(false)) }
-                addView(TextView(context).apply {
-                    layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-                    setTextAppearance(context, R.style.subheading1)
-                    text = R.string.num_reviews.resourceString(restaurant.numReviews ?: 0)
-                })
-            }
-        } ?: run {
-            binding.ratingContainer.removeAllViews()
+        binding.ratingContainer.removeAllViews()
+        binding.ratingContainer.setVisibility(restaurant.rating != null)
+        val rating = restaurant.rating ?: return
+        binding.ratingContainer.apply {
+            // Note to reviewer: Going to just round for speed. Would do half stars in real life
+            val stars = rating.roundToInt()
+            repeat(stars) { addView(makeStarView(true)) }
+            repeat(5 - stars) { addView(makeStarView(false)) }
+            addView(TextView(context).apply {
+                layoutParams =
+                    LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
+                        setMargins(8.pxToDp(), 0, 0, 0)
+                    }
+                setTextAppearance(context, R.style.subheading1)
+                text = R.string.num_reviews.resourceString(restaurant.numReviews ?: 0)
+            })
         }
-        binding.ratingContainer.setVisibility(restaurant.stars != null)
     }
 
     private fun makeStarView(filled: Boolean): ImageView {

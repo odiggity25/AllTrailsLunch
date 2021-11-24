@@ -103,5 +103,11 @@
             tools:text="@string/list"
             android:drawablePadding="4dp"
             tools:drawableStart="@drawable/ic_list"/>
+
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
     </FrameLayout>
 </LinearLayout>

@@ -1,43 +1,28 @@
 package com.orrie.alltrailslunch.restaurants
 
+import android.location.Location
 import com.orrie.alltrailslunch.restaurants.models.Restaurant
+import com.orrie.alltrailslunch.restaurants.services.RestaurantsService
 import io.reactivex.rxjava3.core.Single
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class RestaurantsRepository {
+class RestaurantsRepository: KoinComponent {
 
-    val heartedCache = mutableMapOf<String, Boolean>()
+    private val restaurantsService: RestaurantsService by inject()
+    private val restaurantsStore: RestaurantsStore by inject()
+    private val heartedCache = restaurantsStore.fetchHeartedRestaurantIds().toMutableSet()
 
     fun isRestaurantHearted(id: String): Boolean {
-        // TODO: Fetch from db
-        return heartedCache[id] ?: false
+        return heartedCache.contains(id)
     }
 
     fun setRestaurantHearted(id: String, hearted: Boolean) {
-        // TODO: Update db
-        heartedCache[id] = hearted
+        if (hearted) heartedCache.add(id) else heartedCache.remove(id)
+        restaurantsStore.updateHeartedRestaurantIds(heartedCache)
     }
 
-    fun searchNearby(): Single<List<Restaurant>> {
-        // TODO
-        return Single.just(listOf(
-            Restaurant(
-                id = "1",
-                name = "Res 1",
-                stars = 3,
-                dollarSigns = 2,
-                numReviews = 211,
-                supportingText = "eat here!",
-                imageUrl = "https://theoceanclubdestin.com/wp-content/uploads/2019/10/Destin-restaurant-wine-with-dinner.jpg"
-            ),
-            Restaurant(
-                id = "2",
-                name = "Res 2",
-                stars = 1,
-                dollarSigns = 1,
-                numReviews = 221,
-                supportingText = "don't eat here!",
-                imageUrl = "https://www.google.com/imgres?imgurl=https%3A%2F%2Foceananniesresorts.com%2Fwp-content%2Fuploads%2F2019%2F03%2Fmyrtle-beach-restaurants.jpg&imgrefurl=https%3A%2F%2Foceananniesresorts.com%2Fmyrtle-beach-restaurants-ocean-annies%2F&tbnid=HV_F0cFQl6aPeM&vet=12ahUKEwjE0dSJ4Kr0AhWLhFMKHSfBAAUQMygBegUIARDKAQ..i&docid=vBzbAAco2eC41M&w=5802&h=4000&q=restaurant&ved=2ahUKEwjE0dSJ4Kr0AhWLhFMKHSfBAAUQMygBegUIARDKAQ"
-            )
-        ))
+    fun searchNearby(location: Location, keyword: String? = null): Single<List<Restaurant>> {
+        return restaurantsService.getNearbyRestaurants(location, keyword)
     }
 }

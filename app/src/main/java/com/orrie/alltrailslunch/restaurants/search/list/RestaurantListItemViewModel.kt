@@ -27,6 +27,7 @@ class RestaurantListItemViewModel : BaseViewModel() {
 
     // Functions
     fun bind(restaurant: Restaurant) {
+        this.restaurant = restaurant
         isHearted = restaurantsRepository.isRestaurantHearted(restaurant.id)
     }
 
