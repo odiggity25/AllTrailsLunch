@@ -20,7 +20,7 @@ import timber.log.Timber
  * it was outside the scope of the assignment, which is mainly to demonstrate understand concepts. I'll
  * list these assumptions/scope decisions below so you know they were not just overlooked.
  *
- * -What happens if user moves map? Is search recalculated for new ares?
+ * -What happens if the user moves the map? Is search recalculated for new areas?
  *  -I'm doing nothing currently, mostly because it seemed outside the scope of the assignment
  * -Should the map update as the user moves?
  *  -I'm not doing this for scope reasons
@@ -35,6 +35,9 @@ import timber.log.Timber
  * -There is no testing, I would definitely add some UI tests before merging this in real life. I tried
  *  adding some unit tests but unfortunately I ran into some issues mocking the koin dependencies and
  *  would need more time to figure out why.
+ *
+ * --KNOW BUGS
+ * -The image doesn't show up in the map pin info window sometimes. With more time I would find out why
  *
  * --PROJECT STRUCTURE
  *
