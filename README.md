@@ -2,8 +2,8 @@
 Coding challenge for AllTrails that shows a list of nearby restaurants in a map or list view. You can
 also use the search toolbar to search for specific restaurants. 
 
-![Map view](https://imgur.com/64Sc4fF)
-![List view](https://imgur.com/a/zEStRxU)
+![Map view](https://imgur.com/64Sc4fF.png)
+![List view](https://imgur.com/a/zEStRxU.png)
 
 --Assumptions/Scope decisions*
 
