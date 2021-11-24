@@ -7,6 +7,9 @@ import com.orrie.alltrailslunch.shared.views.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * Displays the restaurants search results as a list of cards
+ */
 class RestaurantsListFragment : BaseFragment<RestaurantsListFragmentBinding>(
     RestaurantsListFragmentBinding::inflate
 ) {

@@ -7,6 +7,9 @@ import io.reactivex.rxjava3.core.Single
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+/**
+ * Note to reviewer: Repositories are the bridge between view models and the storage layers
+ */
 class RestaurantsRepository: KoinComponent {
 
     private val restaurantsService: RestaurantsService by inject()

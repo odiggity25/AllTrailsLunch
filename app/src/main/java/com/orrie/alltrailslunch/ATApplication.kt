@@ -32,6 +32,9 @@ import timber.log.Timber
  *  in the json response that I should use to populate this with
  * -It should remember the last map location so it doesn't pan from 0,0 every time the app opens
  * -The results should be paginated, currently I'm only showing the first page of results
+ * -There is no testing, I would definitely add some UI tests before merging this in real life. I tried
+ *  adding some unit tests but unfortunately I ran into some issues mocking the koin dependencies and
+ *  would need more time to figure out why.
  *
  * --PROJECT STRUCTURE
  *

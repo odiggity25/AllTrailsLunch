@@ -1,5 +1,6 @@
 package com.orrie.alltrailslunch.restaurants.search.list
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.orrie.alltrailslunch.restaurants.models.Restaurant
 class RestaurantsListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var restaurants: List<Restaurant> = listOf()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()

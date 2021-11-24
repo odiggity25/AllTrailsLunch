@@ -23,10 +23,6 @@ open class BaseViewModel : ViewModel(), KoinComponent {
         compositeDisposable.add(this)
     }
 
-    protected fun List<Disposable>.autoDispose() {
-        this.forEach { compositeDisposable.add(it) }
-    }
-
     fun destroy() {
         compositeDisposable.dispose()
     }

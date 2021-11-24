@@ -11,7 +11,7 @@ import com.orrie.alltrailslunch.shared.resourceString
  * Used to map between client and server models related to restaurants
  *
  * Note to reviewer: By using mappers you can make the server model super lenient and handle
- * errors such as missing required fields here. That if there is one messed up server model in
+ * errors such as missing required fields here. That means if there is one messed up server model in
  * a list of models, the whole api result isn't corrupted.
  */
 class RestaurantMapper {

@@ -80,6 +80,5 @@ class RestaurantsSearchViewModel : BaseViewModel() {
         searchQueryChanged.onNext(query)
     }
 
-
     enum class ViewType { List, Map }
 }
