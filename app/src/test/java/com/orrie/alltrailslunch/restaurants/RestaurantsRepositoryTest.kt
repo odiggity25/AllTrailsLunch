@@ -12,7 +12,7 @@ import org.mockito.kotlin.whenever
 
 class RestaurantsRepositoryTest : BaseUnitTest() {
 
-    lateinit var sut: RestaurantsRepository
+    private lateinit var sut: RestaurantsRepository
     private val mockRestaurantsService = mock<RestaurantsService> {}
     private val mockRestaurantsStore = mock<RestaurantsStore> {}
 

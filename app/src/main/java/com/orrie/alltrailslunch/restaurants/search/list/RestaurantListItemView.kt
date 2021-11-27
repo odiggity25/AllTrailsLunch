@@ -1,6 +1,7 @@
 package com.orrie.alltrailslunch.restaurants.search.list
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -24,8 +25,12 @@ import kotlin.math.roundToInt
  * This is a restaurant search result card in the recyclerview and contains info
  * including name, image, price and rating
  */
-class RestaurantListItemView(context: Context, val forMapInfoWindow: Boolean = false)
-    : FrameLayout(context), KoinComponent {
+class RestaurantListItemView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0,
+    val forMapInfoWindow: Boolean = false
+) : FrameLayout(context, attrs, defStyle), KoinComponent {
 
     private val viewModel: RestaurantListItemViewModel by inject()
     // Note to reviewer: Ide probably says this can be joined with assignment however I prefer
