@@ -20,8 +20,8 @@ class RestaurantsRepository: KoinComponent {
         return heartedCache.contains(id)
     }
 
-    fun setRestaurantHearted(id: String, hearted: Boolean) {
-        if (hearted) heartedCache.add(id) else heartedCache.remove(id)
+    fun setRestaurantHeartedState(id: String, isHearted: Boolean) {
+        if (isHearted) heartedCache.add(id) else heartedCache.remove(id)
         restaurantsStore.updateHeartedRestaurantIds(heartedCache)
     }
 

@@ -33,6 +33,6 @@ class RestaurantListItemViewModel : BaseViewModel() {
 
     fun heartTapped() {
         isHearted = !isHearted
-        restaurant?.id?.let { restaurantsRepository.setRestaurantHearted(it, isHearted) }
+        restaurant?.id?.let { restaurantsRepository.setRestaurantHeartedState(it, isHearted) }
     }
 }
